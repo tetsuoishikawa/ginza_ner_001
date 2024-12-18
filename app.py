@@ -7,7 +7,7 @@ import streamlit as st
 import base64
 
 # Streamlit app title
-st.title("カスタムGiNZA　NERマスキング")
+st.title("カスタムGiNZAでNERマスキング")
 
 # GiNZAモデルの読み込み
 nlp = spacy.load("ja_ginza")
