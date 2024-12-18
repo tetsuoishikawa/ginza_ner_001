@@ -1,4 +1,5 @@
-# 以下を「app.py」に書き込みimport spacy
+# 以下を「app.py」に書き込み
+import spacy
 from spacy.pipeline import EntityRuler
 from spacy import displacy
 import json
