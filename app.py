@@ -7,7 +7,7 @@ import streamlit as st
 import base64
 
 # Streamlit app title
-st.title("エンティティ変換アプリケーション")
+st.title("カスタムGiNZA：NER抽出＆マスク文章生成")
 
 # GiNZAモデルの読み込み
 nlp = spacy.load("ja_ginza")
@@ -31,8 +31,12 @@ for file in pattern_files:
         patterns = json.load(f)
         ruler.add_patterns(patterns)
 
+# テキスト入力エリアの初期化
+if "text" not in st.session_state:
+    st.session_state.text = ""
+
 # テキストを画面から入力する
-text = st.text_area("テキストを入力してください（200文字程度表示）:", height=200)
+text = st.text_area("テキストを入力してください（200文字程度表示）:", height=200, value=st.session_state.text)
 
 # 変換ボタン
 if st.button("変換"):
@@ -64,7 +68,7 @@ if st.button("変換"):
                 modified_text = modified_text.replace(ent.text, '<span style="color:cyan;">[Person]</span>')
 
         # 変換後の文章を表示
-        st.subheader("変換後の文章")
+        st.subheader("マスキング後の文章")
         st.markdown(modified_text, unsafe_allow_html=True)
 
         # 変換後の文章をファイルに書き出す
@@ -110,5 +114,6 @@ if st.button("変換"):
         st.markdown(download_link(html, 'output_entities.html', 'エンティティ情報をダウンロード'), unsafe_allow_html=True)
 
 # 再度テキスト入力できるようにするためのボタン
-if st.button("再度テキストを入力する"):
+if st.button("再度テキストを入力"):
+    st.session_state.text = ""
     st.experimental_rerun()
