@@ -57,15 +57,15 @@ if st.button("変換"):
         modified_text = text
         for ent in doc.ents:
             if ent.label_ in location_labels:
-                modified_text = modified_text.replace(ent.text, "[Location]")
+                modified_text = modified_text.replace(ent.text, '<span style="color:green;">[Location]</span>')
             elif ent.label_ in facility_labels:
-                modified_text = modified_text.replace(ent.text, "[Facility]")
+                modified_text = modified_text.replace(ent.text, '<span style="color:sandybrown;">[Facility]</span>')
             elif ent.label_ == "Person":
-                modified_text = modified_text.replace(ent.text, "[Person]")
+                modified_text = modified_text.replace(ent.text, '<span style="color:cyan;">[Person]</span>')
 
         # 変換後の文章を表示
         st.subheader("変換後の文章")
-        st.write(modified_text)
+        st.markdown(modified_text, unsafe_allow_html=True)
 
         # 変換後の文章をファイルに書き出す
         with open("output_modified_text.txt", "w", encoding="utf-8") as f:
@@ -110,5 +110,5 @@ if st.button("変換"):
         st.markdown(download_link(html, 'output_entities.html', 'エンティティ情報をダウンロード'), unsafe_allow_html=True)
 
 # 再度テキスト入力できるようにするためのボタン
-if st.button("次のテキストを入力"):
+if st.button("再度テキストを入力する"):
     st.experimental_rerun()
